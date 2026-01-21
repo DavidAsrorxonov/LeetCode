@@ -2,32 +2,29 @@
  * @param {string} s
  * @return {number}
  */
-s = "-87";
+s = "123243ddfsd9";
 
 var myAtoi = function (s) {
-  const arr = s.trim().split("");
-  const newArr = [];
-  let isNeg = false;
+  let i = 0,
+    n = s.length,
+    sign = 1,
+    result = 0;
 
-  for (let i = 0; i < arr.length; i++) {
-    const ascii = arr[i].charCodeAt(0);
+  while (i < n && s[i] === " ") i++;
 
-    if (arr[0].charCodeAt(0) < 48 || arr[0].charCodeAt(0) > 57) {
-      return 0;
-    } else {
-      if (arr[0] == "-") {
-        isNeg = true;
-      }
-
-      if (ascii >= 48 && ascii <= 57) {
-        newArr.push(arr[i]);
-      } else {
-        return parseInt(newArr.join(""));
-      }
-    }
+  if (i < n && (s[i] === "+" || s[i] === "-")) {
+    sign = s[i] === "-" ? -1 : 1;
+    i++;
   }
 
-  return isNeg ? parseInt(newArr.join("")) * -1 : parseInt(newArr.join(""));
+  while (i < n && s[i] >= "0" && s[i] <= "9") {
+    result = result * 10 + (s[i].charCodeAt(0) - "0".charCodeAt(0));
+    if (result * sign > 2 ** 31 - 1) return 2 ** 31 - 1;
+    if (result * sign < (-2) ** 31) return (-2) ** 31;
+    i++;
+  }
+
+  return result * sign;
 };
 
 console.log(myAtoi(s));
