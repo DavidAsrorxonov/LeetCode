@@ -3,19 +3,27 @@
  * @return {number[]}
  */
 
-const num = [5, 9, 8, 3, 10, 6, 7, 1, 10, 4];
+const num = [2, 2];
 
 var findErrorNums = function (nums) {
-  const arr = [];
-  const sorted = nums.sort((a, b) => a - b);
+  let dup = -1;
+  const n = nums.length;
+  const total = (n * (n + 1)) / 2;
+  let totalNow = 0;
 
   for (let i = 0; i < nums.length; i++) {
-    if (sorted[i] === sorted[i + 1]) {
-      arr.push(sorted[i], sorted[i + 1] + 1);
+    let index = Math.abs(nums[i]) - 1;
+    totalNow += Math.abs(nums[i]);
+
+    if (nums[index] < 0) {
+      dup = Math.abs(nums[i]);
+    } else {
+      nums[index] *= -1;
     }
   }
 
-  return arr;
+  let missing = total + dup - totalNow;
+  return [dup, missing];
 };
 
 console.log(findErrorNums(num));
